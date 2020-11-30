@@ -116,6 +116,20 @@ void swap(int** a, const int row, const int min_index, const int max_index)
 	a[row][max_index] = tmp;
 
 }
+void change_value_in_row(int** a,int row, int rowCount,int colCount)
+{
+	int min_index;
+	int max_index;
+	int min_value;
+	int max_value;
+	find_min_index(a, row, 0, colCount, &min_value, &min_index);
+	find_max_index(a, row, 0, colCount, &max_value, &max_index);
+	swap(a, row, min_index, max_index);
+	if (row < rowCount - 1)
+	{
+		change_value_in_row(a,row + 1, rowCount,colCount);
+	}
+}
 
 int main()
 {
@@ -133,20 +147,8 @@ int main()
 	CreateRows(a, rowCount, colCount, Low, High, 0);
 	// Вивід масива
 	PrintRows(a, rowCount, colCount, 0);
-	int min_index;
-	int max_index;
-	int min_value;
-	int max_value;
 	// Для кожного рядку масиву
-	for (int row = 0; row < rowCount; row++)
-	{
-		// Пошук індекса  мінімального значення
-		find_min_index(a, row, 0, colCount, &min_value, &min_index);
-		// Пошук  індекс максимального значення 
-		find_max_index(a, row, 0, colCount, &max_value, &max_index);
-		// Обмін мінімального і максимального значення
-		swap(a, row, min_index, max_index);
-	}
+	change_value_in_row(a,0, rowCount,colCount);
 	// Вивід результату
 	cout << "New matrix" << endl;
 	PrintRows(a, rowCount, colCount, 0);
